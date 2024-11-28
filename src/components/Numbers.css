@@ -1,0 +1,22 @@
+.Numbers-numbers {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.Number {
+    width: 10%;
+    height: 10%;
+    margin: 5px;
+    background-color: gray;
+    font-size: 30px;
+}
+
+.Number:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.Number:active {
+    background-color: darkgray;
+}
