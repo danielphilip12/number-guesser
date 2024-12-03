@@ -5,25 +5,26 @@ const Numbers = () => {
   const [numbers, setNumbers] = useState([]);
   const [target, setTarget] = useState();
   const [message, setMessage] = useState("Click a number");
-  const [gamesPlayed, setGamesPlayed] = useState(0);
+  const [upper, setUpper] = useState(20);
 
   useEffect(() => {
     const num = [];
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= upper; i++) {
       num.push(i);
     }
 
-    const randomNumber = Math.floor(Math.random() * 20) + 1;
+    const randomNumber = Math.floor(Math.random() * upper) + 1;
 
     setNumbers(num);
     setTarget(randomNumber);
-  }, []);
+  }, [upper]);
 
   const markLow = (guess) => {
     const numberElements = document.querySelectorAll(".Number");
     numberElements.forEach((element) => {
         if (parseInt(element.innerHTML) <= guess) {
             element.style.backgroundColor = "red";
+            element.style.textDecoration = 'line-through';
         } 
       
     });
@@ -34,12 +35,16 @@ const Numbers = () => {
     numberElements.forEach((element) => {
         if (parseInt(element.innerHTML) >= guess) {
             element.style.backgroundColor = "red";
+            element.style.textDecoration = 'line-through';
         } 
       
     });
   }
 
   const handleClick = (e) => {
+    if(message === "Correct") {
+      return;
+    }
     const guess = parseInt(e.target.innerHTML);
     if (guess === target) {
       setMessage("Correct");
@@ -56,7 +61,6 @@ const Numbers = () => {
   };
 
   const handlePlayAgain = () => {
-    setGamesPlayed((prev) => prev + 1);
     const randomNumber = Math.floor(Math.random() * 20) + 1;
 
     setTarget(randomNumber);
@@ -65,10 +69,12 @@ const Numbers = () => {
     numberElements.forEach((element) => {
       element.style.backgroundColor = ""; // Reset background color
       element.style.color = ""; // Reset text color if needed
+      element.style.textDecoration = ""; 
     });
   };
   return (
     <div className="Numbers">
+    <input type="number" name="upper" id="upper" value={upper} onChange={e => setUpper(parseInt(e.target.value))} />
       <div className="Numbers-numbers">
         {numbers &&
           numbers.map((i) => {
